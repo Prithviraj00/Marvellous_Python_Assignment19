@@ -3,7 +3,7 @@ import sys
 import time
 
 
-def DirectoryWatcher(DirectoryName, extension, extension1):
+def DirectoryWatcher(DirectoryName, Directoryname1):
 
     flag = os.path.isabs(DirectoryName)
 
@@ -21,15 +21,30 @@ def DirectoryWatcher(DirectoryName, extension, extension1):
         print("Path is vaild but the target is not a directory")
         exit()
 
+    flag = os.path.isabs(Directoryname1)
+    if flag == False:
+        Directoryname1 = os.path.abspath(Directoryname1)
+    flag = os.path.exists(Directoryname1)
+
+    flag = os.path.exists(Directoryname1)
+    flag = os.mkdir(Directoryname1)
+
     for FolderName, SubFolderNames, FilesNames in os.walk(DirectoryName):
         for fname in FilesNames:
-            if fname.endswith(extension):
-                print("File Name :", fname)
+            if fname:
                 file_path = os.path.join(FolderName, fname)
-                filename = os.path.splitext(fname)[0]
-                new_file = filename + "." + extension1
-                file_path2 = os.path.join(FolderName,new_file)
-                os.rename(file_path, file_path2)
+                file_path2 = os.path.join(Directoryname1, fname)
+
+                obj1 = open(file_path, "rb")
+                data = obj1.read()
+
+                obj2 = open(file_path2, "wb")
+                obj2.write(data)
+
+                print("File name :", fname)
+
+            obj1.close()
+            obj2.close()
 
 
 def main():
@@ -40,18 +55,15 @@ def main():
 
     if len(sys.argv) == 2:
         if (sys.argv[1] == "--h") or (sys.argv[1] == "--H"):
-            print(
-                "This application is used to perform display all files with that extension"
-            )
-            print("Display all files Extension in directory Automation script")
+            print("This script copies all files from one directory to another.")
 
         elif (sys.argv[1] == "--u") or (sys.argv[1] == "--U"):
             print("Use the given script as")
-            print("ScriptName.py NameOfDirectory  file extension")
+            print("DirectoryCopy.py <1st Directory> <2nd Directory>")
             print("Please provide valid absolute path")
 
-    elif len(sys.argv) == 4:
-        DirectoryWatcher(sys.argv[1], sys.argv[2], sys.argv[3])
+    elif len(sys.argv) == 3:
+        DirectoryWatcher(sys.argv[1], sys.argv[2])
 
     else:
         print("Invalid number of command line argument")
