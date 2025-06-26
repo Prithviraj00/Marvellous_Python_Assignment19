@@ -52,11 +52,12 @@ def main():
 
     if len(sys.argv) == 2:
         if (sys.argv[1] == "--h") or (sys.argv[1] == "--H"):
-            print("This script copies all files from one directory to another.")
+            print("This script copies files with specific extension from one directory to another.")
+
 
         elif (sys.argv[1] == "--u") or (sys.argv[1] == "--U"):
             print("Use the given script as")
-            print("DirectoryCopy.py <1st Directory> <2nd Directory>")
+            print("DirectoryCopy.py <1st Directory> <2nd Directory> <extension>")
             print("Please provide valid absolute path")
 
     elif len(sys.argv) == 4:
